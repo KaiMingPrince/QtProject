@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="QRC">
+    <file>UI/Image/close.png</file>
+    <file>UI/Image/rotate_anti_hover.png</file>
+    <file>UI/Image/rotate_anti_normal.png</file>
+    <file>UI/Image/rotate_clock_hover.png</file>
+    <file>UI/Image/rotate_clock_normal.png</file>
+  </qresource>
+</RCC>
