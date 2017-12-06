@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>242</width>
-    <height>399</height>
+    <width>422</width>
+    <height>586</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,26 +16,26 @@
   <property name="styleSheet">
    <string notr="true">QWidget
 {
-	font-size:14px;
+	font-size:24px;
 }
-QWidget#UploadHeaderWnd
+QWidget#ChangeHeaderWnd
 {
-	background:#dddddd;
+	background:white;
 }
 QWidget#widget_title
 {
-	background:#f0f0f0;
+	background:rgb(156,175,189);
 }
-QLabel#label_title
+QWidget#widget_status
 {
-	color:#666666;
+	background:rgb(243,244,246);
 }
 QPushButton
 {
 	border:1px solid gray;
 	border-radius:2px;
 	background:white;
-	font-size:16px;
+	font-size:22px;
 }
 QPushButton#pushButton_close
 {
@@ -45,7 +45,6 @@ QPushButton#pushButton_close
 QPushButton#pushButton_anti
 {
 	border:none;
-	background:#dddddd;
 	background-image:url(:/QRC/UI/Image/rotate_anti_normal.png);
 }
 QPushButton#pushButton_anti:hover
@@ -55,7 +54,6 @@ QPushButton#pushButton_anti:hover
 QPushButton#pushButton_clock
 {
 	border:none;
-	background:#dddddd;
 	background-image:url(:/QRC/UI/Image/rotate_clock_normal.png);
 }
 QPushButton#pushButton_clock:hover
@@ -65,7 +63,7 @@ QPushButton#pushButton_clock:hover
 QPushButton#pushButton_ok
 {
 	color:white;
-	background:lightblue;
+	background:rgb(18,183,245);
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1,0">
@@ -172,9 +170,15 @@ QPushButton#pushButton_ok
       <number>0</number>
      </property>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,2">
        <item>
         <widget class="QPushButton" name="pushButton_upload">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>上传头像</string>
          </property>
@@ -211,8 +215,8 @@ QPushButton#pushButton_ok
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>220</width>
-          <height>218</height>
+          <width>400</width>
+          <height>358</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
@@ -307,47 +311,49 @@ QPushButton#pushButton_ok
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <item>
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_ok">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>确定</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_cancel">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>取消</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QWidget" name="widget_status" native="true">
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_ok">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>确定</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_cancel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>取消</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </item>
     </layout>
    </item>

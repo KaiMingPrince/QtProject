@@ -20,7 +20,6 @@ public:
 
 	void LoadHeader(const QPixmap& pixmap);
 	void RotateHeader(bool bClock);
-	void OnUpdateResult(bool bSuccess);
 
 protected:
 	virtual bool eventFilter(QObject* watched, QEvent* event);
@@ -37,6 +36,6 @@ protected slots:
 private:
 	Ui::ChangeHeaderWnd ui;
 	QWidget*			m_pDivWidget;			//选择头像区域的遮罩层
-	QPixmap				m_originHeader;			//上传的原始头像文件
+	QPixmap				m_sourceHeader;			//上传的原始头像文件
 };
 #endif //_CHANGE_HEADER_WND_H__

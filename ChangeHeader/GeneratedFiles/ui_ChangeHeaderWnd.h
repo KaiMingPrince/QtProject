@@ -46,6 +46,7 @@ public:
     QSlider *horizontalSlider;
     QPushButton *pushButton_anti;
     QPushButton *pushButton_clock;
+    QWidget *widget_status;
     QHBoxLayout *horizontalLayout_4;
     QSpacerItem *horizontalSpacer_3;
     QPushButton *pushButton_ok;
@@ -56,29 +57,29 @@ public:
     {
         if (ChangeHeaderWnd->objectName().isEmpty())
             ChangeHeaderWnd->setObjectName(QStringLiteral("ChangeHeaderWnd"));
-        ChangeHeaderWnd->resize(242, 399);
+        ChangeHeaderWnd->resize(422, 586);
         ChangeHeaderWnd->setStyleSheet(QLatin1String("QWidget\n"
 "{\n"
-"	font-size:14px;\n"
+"	font-size:24px;\n"
 "}\n"
-"QWidget#UploadHeaderWnd\n"
+"QWidget#ChangeHeaderWnd\n"
 "{\n"
-"	background:#dddddd;\n"
+"	background:white;\n"
 "}\n"
 "QWidget#widget_title\n"
 "{\n"
-"	background:#f0f0f0;\n"
+"	background:rgb(156,175,189);\n"
 "}\n"
-"QLabel#label_title\n"
+"QWidget#widget_status\n"
 "{\n"
-"	color:#666666;\n"
+"	background:rgb(243,244,246);\n"
 "}\n"
 "QPushButton\n"
 "{\n"
 "	border:1px solid gray;\n"
 "	border-radius:2px;\n"
 "	background:white;\n"
-"	font-size:16px;\n"
+"	font-size:22px;\n"
 "}\n"
 "QPushButton#pushButton_close\n"
 "{\n"
@@ -88,7 +89,6 @@ public:
 "QPushButton#pushButton_anti\n"
 "{\n"
 "	border:none;\n"
-"	background:#dddddd;\n"
 "	background-image:url(:/QRC/UI/Image/rotate_anti_normal.png);\n"
 "}\n"
 "QPushButton#pushButton_anti:hover\n"
@@ -98,7 +98,6 @@ public:
 "QPushButton#pushButton_clock\n"
 "{\n"
 "	border:none;\n"
-"	background:#dddddd;\n"
 "	background-image:url(:/QRC/UI/Image/rotate_clock_normal.png);\n"
 "}\n"
 "QPushButton#pushButton_clock:hover\n"
@@ -107,9 +106,9 @@ public:
 "}\n"
 "QPushButton#pushButton_ok\n"
 "{\n"
-"	color"
-                        ":white;\n"
-"	background:lightblue;\n"
+"	color:white;\n"
+"	background:rg"
+                        "b(18,183,245);\n"
 "}"));
         verticalLayout_2 = new QVBoxLayout(ChangeHeaderWnd);
         verticalLayout_2->setSpacing(0);
@@ -155,6 +154,11 @@ public:
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
         pushButton_upload = new QPushButton(ChangeHeaderWnd);
         pushButton_upload->setObjectName(QStringLiteral("pushButton_upload"));
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(pushButton_upload->sizePolicy().hasHeightForWidth());
+        pushButton_upload->setSizePolicy(sizePolicy);
 
         horizontalLayout_2->addWidget(pushButton_upload);
 
@@ -162,6 +166,8 @@ public:
 
         horizontalLayout_2->addItem(horizontalSpacer_2);
 
+        horizontalLayout_2->setStretch(0, 1);
+        horizontalLayout_2->setStretch(1, 2);
 
         verticalLayout_3->addLayout(horizontalLayout_2);
 
@@ -172,7 +178,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 220, 218));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 400, 358));
         verticalLayout = new QVBoxLayout(scrollAreaWidgetContents);
         verticalLayout->setSpacing(0);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -216,24 +222,24 @@ public:
 
         verticalLayout_3->addLayout(horizontalLayout_3);
 
-        horizontalLayout_4 = new QHBoxLayout();
+        widget_status = new QWidget(ChangeHeaderWnd);
+        widget_status->setObjectName(QStringLiteral("widget_status"));
+        horizontalLayout_4 = new QHBoxLayout(widget_status);
         horizontalLayout_4->setSpacing(6);
+        horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
         horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout_4->addItem(horizontalSpacer_3);
 
-        pushButton_ok = new QPushButton(ChangeHeaderWnd);
+        pushButton_ok = new QPushButton(widget_status);
         pushButton_ok->setObjectName(QStringLiteral("pushButton_ok"));
-        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(pushButton_ok->sizePolicy().hasHeightForWidth());
         pushButton_ok->setSizePolicy(sizePolicy);
 
         horizontalLayout_4->addWidget(pushButton_ok);
 
-        pushButton_cancel = new QPushButton(ChangeHeaderWnd);
+        pushButton_cancel = new QPushButton(widget_status);
         pushButton_cancel->setObjectName(QStringLiteral("pushButton_cancel"));
         sizePolicy.setHeightForWidth(pushButton_cancel->sizePolicy().hasHeightForWidth());
         pushButton_cancel->setSizePolicy(sizePolicy);
@@ -241,7 +247,7 @@ public:
         horizontalLayout_4->addWidget(pushButton_cancel);
 
 
-        verticalLayout_3->addLayout(horizontalLayout_4);
+        verticalLayout_3->addWidget(widget_status);
 
         verticalLayout_3->setStretch(1, 1);
 

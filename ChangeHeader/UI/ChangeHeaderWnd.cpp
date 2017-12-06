@@ -3,10 +3,16 @@
 #include <QPainter>
 
 ChangeHeaderWnd::ChangeHeaderWnd(QWidget *parent)
-	: QWidget(parent, Qt::Tool | Qt::FramelessWindowHint)
+	: QWidget(parent, Qt::FramelessWindowHint)
 {
 	ui.setupUi(this);
+	ui.horizontalSlider->setEnabled(false);
+
 	m_pDivWidget = new QWidget(ui.scrollArea);
+	m_pDivWidget->setAttribute(Qt::WA_TranslucentBackground);
+	m_pDivWidget->hide();
+	m_pDivWidget->installEventFilter(this);
+	
 	connect(ui.pushButton_close, &QPushButton::clicked, this, &QWidget::close);
 	connect(ui.pushButton_upload, &QPushButton::clicked, this, &ChangeHeaderWnd::onUpload);
 	connect(ui.horizontalSlider, &QSlider::valueChanged, this, &ChangeHeaderWnd::onScaledChanged);
@@ -14,10 +20,6 @@ ChangeHeaderWnd::ChangeHeaderWnd(QWidget *parent)
 	connect(ui.pushButton_clock, &QPushButton::clicked, std::bind(&ChangeHeaderWnd::RotateHeader, this, true));
 	connect(ui.pushButton_ok, &QPushButton::clicked, this, &ChangeHeaderWnd::onOk);
 	connect(ui.pushButton_cancel, &QPushButton::clicked, this, &ChangeHeaderWnd::onCancel);
-
-	m_pDivWidget->setAttribute(Qt::WA_TranslucentBackground);
-	m_pDivWidget->hide();
-	m_pDivWidget->installEventFilter(this);
 }
 
 ChangeHeaderWnd::~ChangeHeaderWnd()
@@ -34,29 +36,24 @@ void ChangeHeaderWnd::RotateHeader(bool bClock)
 	ui.label_header->setPixmap(pixmap);
 }
 
-void ChangeHeaderWnd::OnUpdateResult(bool bSuccess)
-{
-	bSuccess ? onCancel() : ui.label_tip->setText(QString::fromLocal8Bit("修改头像失败"));
-}
-
 void ChangeHeaderWnd::LoadHeader(const QPixmap& pixmap)
 {
-	m_originHeader = pixmap;
+	m_sourceHeader = pixmap;
 	int nSliderMinmum = 0;
 	QPixmap scaledPixmap;
-	if (m_originHeader.width() > m_originHeader.height())
+	if (m_sourceHeader.width() > m_sourceHeader.height())
 	{
-		scaledPixmap = m_originHeader.scaledToHeight(ui.scrollArea->height());
-		nSliderMinmum = scaledPixmap.height() * 100 / m_originHeader.height();
+		scaledPixmap = m_sourceHeader.scaledToHeight(ui.scrollArea->height());
+		nSliderMinmum = scaledPixmap.height() * ui.horizontalSlider->maximum() / m_sourceHeader.height();
 	}
 	else
 	{
-		scaledPixmap = m_originHeader.scaledToWidth(ui.scrollArea->width());
- 		nSliderMinmum = scaledPixmap.width() * 100 / m_originHeader.width();
+		scaledPixmap = m_sourceHeader.scaledToWidth(ui.scrollArea->width());
+ 		nSliderMinmum = scaledPixmap.width() * ui.horizontalSlider->maximum() / m_sourceHeader.width();
 	}
-	ui.scrollAreaWidgetContents->resize(m_originHeader.size());
+	ui.scrollAreaWidgetContents->resize(m_sourceHeader.size());
+	ui.horizontalSlider->setEnabled(true);
 	ui.horizontalSlider->setMinimum(nSliderMinmum);
-	ui.horizontalSlider->setMaximum(100);
 	ui.horizontalSlider->setValue(nSliderMinmum);
 	ui.label_header->setPixmap(scaledPixmap);
 	m_pDivWidget->show();
@@ -91,21 +88,27 @@ void ChangeHeaderWnd::onUpload()
 
 void ChangeHeaderWnd::onScaledChanged(int nValue)
 {
-	QPixmap pixmap = m_originHeader.scaled(m_originHeader.size() * ((double)nValue / ui.horizontalSlider->maximum()));
+	QPixmap pixmap = m_sourceHeader.scaled(m_sourceHeader.size() * ((double)nValue / ui.horizontalSlider->maximum()));
 	ui.scrollAreaWidgetContents->resize(pixmap.size());
 	ui.label_header->setPixmap(pixmap);
 }
 
 void ChangeHeaderWnd::onOk()
 {
-	emit updateHeader(*ui.label_header->pixmap());
-	onCancel();
+	if (const QPixmap* pHeader = ui.label_header->pixmap())
+	{
+		emit updateHeader(*pHeader);
+		ui.label_tip->setText(QString::fromLocal8Bit("修改头像成功"));
+	}
+	else
+	{
+		ui.label_tip->setText(QString::fromLocal8Bit("还未加载头像"));
+	}
 }
 
 void ChangeHeaderWnd::onCancel()
 {
+	ui.label_tip->setText(QString::fromLocal8Bit("取消修改头像"));
 	m_pDivWidget->hide();
 	ui.label_header->clear();
-	ui.label_tip->clear();
-	hide();
 }
